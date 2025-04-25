@@ -1,5 +1,6 @@
 // src/pages/Signup.jsx
 import React, { useState } from 'react';
+import { FormInput } from '../components/Forminput';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
