@@ -1,3 +1,4 @@
+// src/pages/Signup.jsx
 import React, { useState } from 'react';
 
 const Signup = () => {
@@ -27,74 +28,67 @@ const Signup = () => {
     e.preventDefault();
     if (isFormValid()) {
       console.log('Form Data:', formData);
-      // Handle submission logic
+      // Handle API submission here
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <form
         onSubmit={handleSubmit}
-        className="max-w-md w-full bg-white p-6 rounded-md shadow-sm border border-gray-200"
+        className="w-full max-w-xs bg-white rounded-2xl shadow-md p-6"
       >
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Create your PopX account</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-6">
+          Create your PopX account
+        </h2>
 
         {[
           { label: 'Full Name*', name: 'fullName' },
           { label: 'Phone number*', name: 'phoneNumber' },
           { label: 'Email address*', name: 'email' },
-          { label: 'Password *', name: 'password', type: 'password' },
+          { label: 'Password*', name: 'password', type: 'password' },
           { label: 'Company name', name: 'companyName' },
         ].map(({ label, name, type = 'text' }) => (
-          <div key={name} className="mb-4">
-            <label className="block text-sm font-medium text-purple-600 mb-1">
-              {label}
-            </label>
-            <input
-              type={type}
-              name={name}
-              placeholder={`Enter ${label.replace('*', '').toLowerCase()}`}
-              value={formData[name]}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-          </div>
+          <FormInput
+            key={name}
+            label={label}
+            name={name}
+            type={type}
+            value={formData[name]}
+            onChange={handleChange}
+          />
         ))}
 
         <div className="mb-6">
-          <p className="text-sm font-medium text-gray-700 mb-2">Are you an Agency? <span className="text-red-500">*</span></p>
-          <div className="flex items-center space-x-6">
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="radio"
-                name="isAgency"
-                value="Yes"
-                checked={formData.isAgency === 'Yes'}
-                onChange={handleChange}
-                className="form-radio text-purple-600"
-              />
-              <span>Yes</span>
-            </label>
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="radio"
-                name="isAgency"
-                value="No"
-                checked={formData.isAgency === 'No'}
-                onChange={handleChange}
-                className="form-radio text-purple-600"
-              />
-              <span>No</span>
-            </label>
+          <p className="text-sm font-medium text-gray-700 mb-2">
+            Are you an Agency? <span className="text-red-500">*</span>
+          </p>
+          <div className="flex items-center gap-6">
+            {['Yes', 'No'].map((option) => (
+              <label
+                key={option}
+                className="flex items-center gap-2 text-sm text-gray-800 cursor-pointer"
+              >
+                <input
+                  type="radio"
+                  name="isAgency"
+                  value={option}
+                  checked={formData.isAgency === option}
+                  onChange={handleChange}
+                  className="accent-purple-600"
+                />
+                {option}
+              </label>
+            ))}
           </div>
         </div>
 
         <button
           type="submit"
           disabled={!isFormValid()}
-          className={`w-full py-2 rounded-md font-semibold ${
+          className={`w-full py-3 text-sm rounded-md font-semibold transition ${
             isFormValid()
-              ? 'bg-purple-600 text-white hover:bg-purple-700 transition'
+              ? 'bg-purple-600 text-white hover:bg-purple-700'
               : 'bg-gray-300 text-gray-500 cursor-not-allowed'
           }`}
         >
